@@ -39,7 +39,7 @@
       closeIconLabel: 'Close WideArea',
       changeThemeIconLabel: 'Toggle Color Scheme',
       fullScreenIconLabel: 'WideArea Mode',
-      autoSaveKeyPrefix: 'WDATA-'
+      autoSaveKeyPrefix: 'WDATA-' + window.location.href + '-'
     };
 
     _enable.call(this);
