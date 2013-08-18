@@ -39,7 +39,8 @@
       closeIconLabel: 'Close WideArea',
       changeThemeIconLabel: 'Toggle Color Scheme',
       fullScreenIconLabel: 'WideArea Mode',
-      autoSaveKeyPrefix: 'WDATA-' + window.location.href + '-'
+      autoSaveKeyPrefix: 'WDATA-' + window.location.href + '-',
+      autoSave: false
     };
 
     _enable.call(this);
@@ -147,19 +148,21 @@
       currentTextArea.setAttribute("data-widearea-id", this._wideAreaId);
       wideAreaIcons.setAttribute("id", "widearea-" + this._wideAreaId);
 
-      //Autosaving
-      if (_getFromStorage.call(this, this._wideAreaId)) {
-        currentTextArea.value = _getFromStorage.call(this, this._wideAreaId);
-      }
+      if (this._options.autoSave) {
+        //Autosaving
+        if (_getFromStorage.call(this, this._wideAreaId)) {
+          currentTextArea.value = _getFromStorage.call(this, this._wideAreaId);
+        }
 
-      var onTextChanged = function () {
-        _saveToStorage.call(self, this.getAttribute('data-widearea-id'), this.value);
-      };
-      //add textchange listener
-      if (currentTextArea.addEventListener) {
-        currentTextArea.addEventListener('input', onTextChanged, false);
-      } else if (currentTextArea.attachEvent) { //IE hack
-        currentTextArea.attachEvent('onpropertychange', onTextChanged);
+        var onTextChanged = function () {
+          _saveToStorage.call(self, this.getAttribute('data-widearea-id'), this.value);
+        };
+        //add textchange listener
+        if (currentTextArea.addEventListener) {
+          currentTextArea.addEventListener('input', onTextChanged, false);
+        } else if (currentTextArea.attachEvent) { //IE hack
+          currentTextArea.attachEvent('onpropertychange', onTextChanged);
+        }
       }
 
       //go to next wideArea
